@@ -213,6 +213,33 @@ progress {
   border-radius: 100px;
 }
 
+.indicators {
+  width: 120%;
+  transform: translateX(-10%);
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 3rem;
+  gap: 1rem;
+}
+
+.btn-qi {
+  background-color: var(--color-darkest);
+  border: 2px solid var(--color-dark);
+  color: var(--color-light);
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-qi-active {
+  background-color: var(--color-light);
+  border: 2px solid var(--color-light);
+  color: var(--color-darkest);
+}
+
 /* CREDIT: https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
 .loader {
   width: 50px;

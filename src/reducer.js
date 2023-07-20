@@ -6,7 +6,7 @@ const initialState = {
   // 'loading', 'error', 'ready', 'active', 'finished'
   status: "loading",
   index: 0,
-  answer: null,
+  answer: [],
   points: 0,
   highscore: 0,
   secondsRemaining: 0,
@@ -29,17 +29,19 @@ function reducer(state, action) {
       };
     case "newAnswer":
       const question = state.questions.at(state.index);
+      const newAnsArray = [...state.answer];
+      newAnsArray[state.index] = action.payload;
 
       return {
         ...state,
-        answer: action.payload,
+        answer: newAnsArray,
         points:
           action.payload === question.correctOption
             ? state.points + question.points
             : state.points,
       };
     case "nextQuestion":
-      return { ...state, index: state.index + 1, answer: null };
+      return { ...state, index: state.index + 1 };
     case "finish":
       return {
         ...state,
@@ -63,6 +65,11 @@ function reducer(state, action) {
           state.secondsRemaining === 0
             ? Math.max(state.points, state.highscore)
             : state.highscore,
+      };
+    case "jumpQuestion":
+      return {
+        ...state,
+        index: action.payload,
       };
     default:
       throw new Error("Action unknown");

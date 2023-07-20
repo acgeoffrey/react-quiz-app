@@ -11,6 +11,7 @@ import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import { initialState, reducer } from "../reducer";
 import Timer from "./Timer";
+import QuestionIndicator from "./QuestionIndicator";
 
 export default function App() {
   const [
@@ -24,10 +25,14 @@ export default function App() {
     0
   );
 
+  const url = "https://my-json-server.typicode.com/acgeoffrey/json-quiz/db";
+
   useEffect(function () {
-    fetch("http://localhost:8000/questions")
+    fetch(url)
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
+      .then((data) =>
+        dispatch({ type: "dataReceived", payload: data.questions })
+      )
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
 
@@ -53,7 +58,18 @@ export default function App() {
               question={questions[index]}
               dispatch={dispatch}
               answer={answer}
+              index={index}
             />
+            <div className="indicators">
+              {questions.map((question, num) => (
+                <QuestionIndicator
+                  key={num}
+                  num={num}
+                  dispatch={dispatch}
+                  index={index}
+                />
+              ))}
+            </div>
             <Footer>
               <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
               <NextButton
